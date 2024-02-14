@@ -16,14 +16,17 @@ import { useDispatch } from "react-redux";
 function DragNDrop() {
     const dispatch = useDispatch<AppDispatch>();
 
-    const onDrop: any = useCallback((acceptedFiles: FileList) => {
-        console.log(acceptedFiles);
-        const reader = new FileReader();
-        reader.addEventListener("load", (e) => {
-            dispatch(setImage(e.target?.result as string));
-        });
-        reader.readAsDataURL(acceptedFiles[0]);
-    }, []);
+    const onDrop: any = useCallback(
+        (acceptedFiles: FileList) => {
+            console.log(acceptedFiles);
+            const reader = new FileReader();
+            reader.addEventListener("load", (e) => {
+                dispatch(setImage(e.target?.result as string));
+            });
+            reader.readAsDataURL(acceptedFiles[0]);
+        },
+        [dispatch]
+    );
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
