@@ -1,10 +1,11 @@
-"use client"
+"use client";
 
-import React, { FormEvent, useState } from "react"
-import Link from "next/link"
+import React, { FormEvent, useEffect, useState } from "react";
+import Link from "next/link";
 import { IoMdClose } from "react-icons/io";
+import { usePathname } from "next/navigation";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 // import { Icons } from "@/components/icons"
 import {
     NavigationMenu,
@@ -14,8 +15,8 @@ import {
     NavigationMenuList,
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
-import { ModeToggle } from "./mode-toggle"
+} from "@/components/ui/navigation-menu";
+import { ModeToggle } from "./mode-toggle";
 import { FaBars } from "react-icons/fa";
 import Image from "next/image";
 
@@ -55,68 +56,106 @@ const components: { title: string; href: string; description: string }[] = [
         description:
             "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
     },
-]
+];
 
 export default function NavBar() {
-
     const [navBar, setNavBar] = useState<{
-        isOpen: boolean
+        isOpen: boolean;
     }>({
-        isOpen: false
-    })
+        isOpen: false,
+    });
+
+    const pathname = usePathname();
+
+    const [docWidth, setDocWidth] = useState(
+        document.documentElement.scrollWidth
+    );
 
     function toggleNavBar() {
-        setNavBar(prev => ({
+        setNavBar((prev) => ({
             ...navBar,
-            isOpen: !navBar.isOpen
-        }))
+            isOpen: !navBar.isOpen,
+        }));
     }
+
+    useEffect(() => {
+        if (document.documentElement.scrollWidth >= 768 || !navBar.isOpen) {
+            document.body.style.overflow = "auto";
+        } else if (navBar.isOpen) {
+            document.body.style.overflow = "hidden";
+        }
+    });
 
     return (
         <NavigationMenu className="p-2 py-4 flex justify-between min-w-full sticky top-0 backdrop-blur-xl ">
-            <NavigationMenuList className={cn(
-                navBar.isOpen && "flex flex-col fixed inset-0 gap-4 bg-white dark:bg-gray-900 items-start justify-start pl-10 pt-20 text-lg scale-x-100 md:static md:flex-row md:p-2  md:bg-transparent",
-                !navBar.isOpen && "flex flex-col fixed inset-0 gap-4  items-start justify-start text-lg scale-x-0 md:scale-x-100 md:static md:flex-row md:p-2  md:bg-transparent"
-            )}
+            <NavigationMenuList
+                className={cn(
+                    navBar.isOpen &&
+                        "flex flex-col fixed  gap-4 bg-white backdrop-blur-xl dark:bg-gray-900 items-start justify-start pl-10 pt-20 text-lg scale-x-100 md:static md:flex-row md:p-2  md:bg-transparent",
+                    !navBar.isOpen &&
+                        " hidden md:flex sticky top-0 gap-4 items-start justify-start text-lg scale-x-0 md:scale-x-100 md:static md:flex-row md:p-2  md:bg-transparent"
+                )}
             >
-                <Link href={'/'} className="w-[50px]">
-                    <Image src={'/Logo/logo.png'} alt="" objectFit="cover" width={10} height={10} unoptimized className="w-fit hover:scale-105 duration-150 hidden md:flex" ></Image>
+                <Link href={"/"} className="w-[50px]">
+                    <Image
+                        src={"/Logo/logo.png"}
+                        alt=""
+                        objectFit="cover"
+                        width={10}
+                        height={10}
+                        unoptimized
+                        className="w-fit hover:scale-105 duration-150 hidden md:flex"
+                    ></Image>
                 </Link>
                 <NavigationMenuLink
                     href="/dashboard"
-                    className="hover:opacity-80 duration-150 cursor-pointer hover:translate-x-1">
+                    className="hover:opacity-80 duration-150 cursor-pointer hover:translate-x-1"
+                >
                     Dashboard
                 </NavigationMenuLink>
                 <NavigationMenuLink
                     href="/workspace"
-                    className="hover:opacity-80 duration-150 cursor-pointer hover:translate-x-1">
+                    className="hover:opacity-80 duration-150 cursor-pointer hover:translate-x-1"
+                >
                     Workspace
                 </NavigationMenuLink>
                 <NavigationMenuLink
                     href="/contact"
-                    className="hover:opacity-80 duration-150 cursor-pointer hover:translate-x-1">
+                    className="hover:opacity-80 duration-150 cursor-pointer hover:translate-x-1"
+                >
                     Contact
                 </NavigationMenuLink>
             </NavigationMenuList>
-            <div className={cn(
-                "flex gap-2  w-full sticky inset-0 max-h-fit justify-between items-center px-3  py-1 md:static md:flex md:justify-end",
-                navBar.isOpen && "bg-white dark:bg-gray-900"
-            )}>
+            <div
+                className={cn(
+                    "flex gap-2  w-full sticky max-h-fit justify-between items-center px-3  py-1 md:static md:flex md:justify-end",
+                    navBar.isOpen &&
+                        "bg-white dark:bg-gray-900 md:bg-transparent md:dark:bg-transparent"
+                )}
+            >
                 <div className="flex items-center gap-4">
-                    <div className="hover:bg-opacity-50 cursor-pointer p-2 md:hidden" onClick={toggleNavBar}>
-                        {
-                            navBar.isOpen ?
-                                <IoMdClose />
-                                :
-                                <FaBars />
-                        }
+                    <div
+                        className="hover:bg-opacity-50 cursor-pointer p-2 md:hidden"
+                        onClick={toggleNavBar}
+                    >
+                        {navBar.isOpen ? <IoMdClose /> : <FaBars />}
                     </div>
-                    <Image src={'/Logo/logo.png'} alt="" objectFit="cover" width={10} height={10} unoptimized className="w-[40px] h-[20px] aspect-square hover:scale-105 duration-150 md:hidden"></Image>
+                    <Link href={"/"} className="md:hidden">
+                        <Image
+                            src={"/Logo/logo.png"}
+                            alt=""
+                            objectFit="cover"
+                            width={10}
+                            height={10}
+                            unoptimized
+                            className="w-[40px] h-[20px] aspect-square hover:scale-105 duration-150 "
+                        ></Image>
+                    </Link>
                 </div>
                 <ModeToggle />
             </div>
         </NavigationMenu>
-    )
+    );
 }
 
 const ListItem = React.forwardRef<
@@ -134,13 +173,15 @@ const ListItem = React.forwardRef<
                     )}
                     {...props}
                 >
-                    <div className="text-sm font-medium leading-none">{title}</div>
+                    <div className="text-sm font-medium leading-none">
+                        {title}
+                    </div>
                     <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                         {children}
                     </p>
                 </a>
             </NavigationMenuLink>
         </li>
-    )
-})
-ListItem.displayName = "ListItem"
+    );
+});
+ListItem.displayName = "ListItem";

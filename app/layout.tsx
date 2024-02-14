@@ -4,33 +4,32 @@ import "./globals.css";
 import { ThemeProvider } from "./components/theme-provider";
 import NavBar from "./components/nav-bar";
 
-const nuntio_sans = Nunito_Sans({ subsets: ["latin"] })
+const nuntio_sans = Nunito_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Vixel Flow"
+    title: "Vixel Flow",
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className={nuntio_sans.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-
-          <main className="max-w-[1500px] mx-auto relative">
-            <NavBar />
-            {children}
-          </main>
-        </ThemeProvider>
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <body className={nuntio_sans.className}>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <main className="max-w-[1500px] mx-auto">
+                        <NavBar />
+                        {children}
+                    </main>
+                </ThemeProvider>
+            </body>
+        </html>
+    );
 }
