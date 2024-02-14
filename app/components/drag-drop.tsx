@@ -1,12 +1,11 @@
 "use client";
 
+import { setImage } from "@/lib/redux/slices/imageSlice";
+import { AppDispatch } from "@/lib/redux/store";
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { IoMdCloudUpload } from "react-icons/io";
-
-interface Props {
-    setImage: (image: string | undefined) => void;
-}
+import { useDispatch } from "react-redux";
 
 /**
  * A component handling drag and drop files
@@ -14,18 +13,17 @@ interface Props {
  * @returns
  */
 
-function DragNDrop({ setImage }: Props) {
-    const onDrop: any = useCallback(
-        (acceptedFiles: FileList) => {
-            console.log(acceptedFiles);
-            const reader = new FileReader();
-            reader.addEventListener("load", (e) => {
-                setImage(e.target?.result as string);
-            });
-            reader.readAsDataURL(acceptedFiles[0]);
-        },
-        [setImage]
-    );
+function DragNDrop() {
+    const dispatch = useDispatch<AppDispatch>();
+
+    const onDrop: any = useCallback((acceptedFiles: FileList) => {
+        console.log(acceptedFiles);
+        const reader = new FileReader();
+        reader.addEventListener("load", (e) => {
+            dispatch(setImage(e.target?.result as string));
+        });
+        reader.readAsDataURL(acceptedFiles[0]);
+    }, []);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,

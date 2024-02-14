@@ -19,13 +19,13 @@ interface Props {
  */
 function Accordion({ accordion }: Props) {
     return (
-        <div>
+        <div className="w-full">
             {accordion.map(({ title, content }: TypeAccordion, key) => (
                 <div
                     className="collapse collapse-arrow bg-gray-100 dark:bg-base-200 "
                     key={key}
                 >
-                    <input type="radio" name="my-accordion-2" checked={true} />
+                    <input type="radio" name="my-accordion-2" />
                     <div className="collapse-title text-xl font-medium">
                         {title}
                     </div>
