@@ -1,6 +1,5 @@
 "use client";
-import { cn } from "@/lib/utils";
-import React, { ReactNode } from "react";
+import React, { MouseEvent, ReactNode } from "react";
 
 /**
  * Custom General Purpose Button Definition
@@ -11,12 +10,12 @@ import React, { ReactNode } from "react";
 function CButton({
     children,
     className,
-    onClick,
+    onClickCallback,
     name,
 }: {
     children: ReactNode;
     className?: string;
-    onClick?: (arg0: any) => void;
+    onClickCallback?: (e: MouseEvent<HTMLButtonElement>) => void;
     name?: string;
 }) {
     return (
@@ -26,7 +25,7 @@ function CButton({
                     className ??
                     "btn inline-block bg-white border-[1px] border-gray-300 dark:border-gray-800 hover:text-white dark:bg-zinc-900 dark:hover:bg-gray-950 m-[1px]"
                 }
-                onClick={onClick}
+                onClick={(e) => onClickCallback?.(e)}
                 name={name}
             >
                 {children}

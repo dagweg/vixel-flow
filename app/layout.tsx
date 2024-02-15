@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "./components/theme-provider";
 import NavBar from "./components/nav-bar";
 import ReduxProvider from "./components/redux-provider";
+import "rc-tooltip/assets/bootstrap_white.css";
 
 const nuntio_sans = Nunito_Sans({ subsets: ["latin"] });
 

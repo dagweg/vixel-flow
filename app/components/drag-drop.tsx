@@ -2,7 +2,7 @@
 
 import { setImage } from "@/lib/redux/slices/imageSlice";
 import { AppDispatch } from "@/lib/redux/store";
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { IoMdCloudUpload } from "react-icons/io";
 import { useDispatch } from "react-redux";
@@ -18,9 +18,10 @@ function DragNDrop() {
 
     const onDrop: any = useCallback(
         (acceptedFiles: FileList) => {
-            console.log(acceptedFiles);
+            // console.log(acceptedFiles);
             const reader = new FileReader();
             reader.addEventListener("load", (e) => {
+                // console.log(e.target?.result);
                 dispatch(setImage(e.target?.result as string));
             });
             reader.readAsDataURL(acceptedFiles[0]);
@@ -31,6 +32,7 @@ function DragNDrop() {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
     });
+
     return (
         <div
             {...getRootProps()}

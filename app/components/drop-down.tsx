@@ -11,14 +11,8 @@ interface Props {
 }
 
 // Custom Dropdown component
-function CDropDown({ dropDownElements }: Props) {
-    return (
-        <div>
-            {dropDownElements.map(({ content }: TypeContent, key) => (
-                <div key={key}>{content}</div>
-            ))}
-        </div>
-    );
+function CDropDown({ children }: { children: ReactNode }) {
+    return <div>{children}</div>;
 }
 
 export default CDropDown;
