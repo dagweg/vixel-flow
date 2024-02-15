@@ -31,6 +31,8 @@ function ModifierPane() {
                     console.log(data);
                     dispatch(setImage(data.image));
                     dispatch(setImageExtension(data.ext));
+                } else {
+                    console.log("didnt recieve the data. check server!!");
                 }
             })
             .catch((error) => console.log((error as Error).message));

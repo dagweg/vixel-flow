@@ -20,9 +20,11 @@ function DragNDrop() {
         (acceptedFiles: FileList) => {
             // console.log(acceptedFiles);
             const reader = new FileReader();
+
             reader.addEventListener("load", (e) => {
                 // console.log(e.target?.result);
                 dispatch(setImage(e.target?.result as string));
+                console.log(e.target?.result);
             });
             reader.readAsDataURL(acceptedFiles[0]);
         },
