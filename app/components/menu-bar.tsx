@@ -13,7 +13,7 @@ function MenuBar() {
     return (
         <div
             ref={menuRef}
-            className="tooltip w-fit h-[40px]  bg-gray-100 dark:bg-gray-900 rounded-lg mx-4 flex justify-start items-center"
+            className="tooltip w-fit h-[40px]  bg-gray-100 dark:bg-gray-900 rounded-lg  flex justify-start items-center"
         >
             <MButton tooltip="Download" onClick={() => handleDownload(menuRef)}>
                 <TfiDownload></TfiDownload>

@@ -49,7 +49,7 @@ function Workspace() {
     }
 
     return (
-        <div className="flex flex-col justify-center  h-screen w-full relative">
+        <div className="flex flex-col justify-center  h-screen w-full relative p-4">
             <MenuBar />
             <div className="flex flex-col md:flex-row w-full h-full pb-8 pt-2 gap-4 ">
                 {/** Main section for displaying the image */}
