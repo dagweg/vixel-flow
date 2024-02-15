@@ -4,7 +4,7 @@ import CButton from "./custom-button";
 import { FxRequest, FxResponse } from "@/lib/validators";
 import { AppDispatch, RootState, store } from "@/lib/redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { setImage } from "@/lib/redux/slices/imageSlice";
+import { setImage, setImageExtension } from "@/lib/redux/slices/imageSlice";
 
 function ModifierPane() {
     const imageData = useSelector((state: RootState) => state.image.data);
@@ -30,6 +30,7 @@ function ModifierPane() {
                 if (r.ok) {
                     console.log(data);
                     dispatch(setImage(data.image));
+                    dispatch(setImageExtension(data.ext));
                 }
             })
             .catch((error) => console.log((error as Error).message));

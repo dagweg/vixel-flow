@@ -1,5 +1,4 @@
 import sharp from "sharp";
-import { bufferFromString } from "./util";
 
 export default async function grayscale(imageBuffer: Buffer): Promise<Buffer> {
     try {

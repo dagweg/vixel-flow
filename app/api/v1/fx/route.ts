@@ -1,8 +1,9 @@
 import grayscale from "@/lib/image-processing/grayscale";
 import sepia from "@/lib/image-processing/sepia";
-import { bufferFromString } from "@/lib/image-processing/util";
+import { base64ToBuffer } from "@/lib/image-processing/util";
 import { FxRequest, apiFxReqValidator } from "@/lib/validators";
 import { NextRequest, NextResponse } from "next/server";
+import * as fileType from "file-type";
 
 export async function POST(request: NextRequest) {
     try {
@@ -13,7 +14,7 @@ export async function POST(request: NextRequest) {
         }
 
         let processedImage: Buffer;
-        let imageBuffer: Buffer = bufferFromString(body.image);
+        let imageBuffer: Buffer = base64ToBuffer(body.image);
 
         switch (body.effect.toLowerCase()) {
             case "grayscale":
@@ -27,12 +28,15 @@ export async function POST(request: NextRequest) {
                 break;
         }
 
-        const finalImage = `data:image/jpeg;base64,${processedImage.toString(
+        const extension = await fileType.fileTypeFromBuffer(processedImage);
+
+        const finalImageBase64 = `data:image/jpeg;base64,${processedImage.toString(
             "base64"
         )}`;
 
         return NextResponse.json({
-            image: finalImage,
+            image: finalImageBase64,
+            ext: extension?.ext,
         });
     } catch (error) {
         console.log((error as Error).message);

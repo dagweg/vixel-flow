@@ -4,7 +4,7 @@ import DragNDrop from "@/app/components/drag-drop";
 import CDropDown from "@/app/components/drop-down";
 import useComponentVisible from "@/app/hooks/use-component-visible";
 import Image from "next/image";
-import React from "react";
+import React, { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/lib/redux/store";
 import { TfiDownload } from "react-icons/tfi";
@@ -16,6 +16,7 @@ import CMButton from "@/app/components/custom-context-menu-button";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { setImage } from "@/lib/redux/slices/imageSlice";
 import MenuBar from "@/app/components/menu-bar";
+import ImageContextMenu from "@/app/components/image-context-menu";
 
 function Workspace() {
     // Image stored here after import
@@ -72,22 +73,12 @@ function Workspace() {
                 <ModifierPane />
             </div>
 
-            {/** Image Right Click ContextMenu Drop Down is here! */}
+            {/** Image Right Click ContextMenu */}
             <div ref={ref} className="w-fit h-fit fixed inset-0">
                 {isComponentVisible && (
-                    <div className="bg-white p-2 rounded-sm border-[1px] border-gray-300 dark:bg-black dark:border-gray-700 flex flex-col gap-2">
-                        <CDropDown>
-                            <CMButton
-                                className="!text-red-500"
-                                onClickCallback={() =>
-                                    handleImageRemove(dispatch)
-                                }
-                            >
-                                <FaRegTrashAlt />
-                                Remove
-                            </CMButton>
-                        </CDropDown>
-                    </div>
+                    <ImageContextMenu
+                        setIsComponentVisible={setIsComponentVisible}
+                    />
                 )}
             </div>
         </div>
@@ -95,7 +86,3 @@ function Workspace() {
 }
 
 export default Workspace;
-
-function handleImageRemove(dispatch: AppDispatch) {
-    dispatch(setImage(undefined));
-}
