@@ -4,12 +4,15 @@ import { z } from "zod";
 export const apiFxReqValidator = z.object({
     effect: z.string(),
     image: z.string(),
+    fileName: z.string(),
 });
 
 // FX Response Schema
 export const apiFxResValiator = z.object({
     image: z.string(),
-    ext: z.string(),
+    extension: z.string(),
+    fileSize: z.number(),
+    fileName: z.string(),
 });
 
 export type FxRequest = z.infer<typeof apiFxReqValidator>;

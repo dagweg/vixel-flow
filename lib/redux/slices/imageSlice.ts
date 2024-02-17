@@ -1,26 +1,28 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { initialize } from "next/dist/server/lib/render-server";
 import crypto from "crypto";
+import { access } from "fs";
+
+interface OriginalImageState
+    extends Omit<ImageState, "recentModifications" | "originalImage"> {}
 
 export interface ImageState {
-    id?: number;
     data: string | undefined;
     extension: string | undefined;
     fileName: string | undefined;
     fileSize: number | undefined;
     recentModifications?: ImageState[];
+    originalImage?: OriginalImageState | undefined;
 }
 
 const initialState: ImageState = {
-    id: 0,
     data: undefined,
     extension: undefined,
     fileName: undefined,
     fileSize: undefined,
     recentModifications: [],
+    originalImage: undefined,
 };
-
-let id: number = 0;
 
 const imageSlice = createSlice({
     name: "image",
@@ -33,7 +35,7 @@ const imageSlice = createSlice({
                 .update(action.payload.data as string)
                 .digest("hex");
 
-            // compared with each image data sha256
+            // compared with each image data hash
             const imageAlreadyPresent = state.recentModifications?.some(
                 (image: ImageState) => {
                     const imageHash = crypto
@@ -44,9 +46,10 @@ const imageSlice = createSlice({
                 }
             );
 
-            if (!imageAlreadyPresent) {
+            if (imageAlreadyPresent === false) {
                 state.recentModifications?.push(action.payload);
             }
+
             state.data = action.payload.data;
             state.extension = action.payload.extension;
             state.fileName = action.payload.fileName;
@@ -58,10 +61,17 @@ const imageSlice = createSlice({
         ) => {
             state.recentModifications = action.payload;
         },
+        setOriginalImage: (
+            state,
+            action: PayloadAction<OriginalImageState>
+        ) => {
+            state.originalImage = action.payload;
+        },
     },
 });
 
-export const { setImage, setImageRecentModifications } = imageSlice.actions;
+export const { setImage, setImageRecentModifications, setOriginalImage } =
+    imageSlice.actions;
 
 // Will be imported as ImageReducer in other modules
 const ImageReducer = imageSlice.reducer;

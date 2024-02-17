@@ -5,6 +5,7 @@ import { FxRequest, FxResponse } from "@/lib/validators";
 import { AppDispatch, RootState } from "@/lib/redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setImage } from "@/lib/redux/slices/imageSlice";
+import PaneTitle from "./pane-title";
 
 function ModifierPane() {
     const image = useSelector((state: RootState) => state.image);
@@ -15,6 +16,7 @@ function ModifierPane() {
         const payload: FxRequest = {
             image: image.data as string,
             effect: effectName,
+            fileName: image.originalImage?.fileName as string,
         };
 
         console.log(payload);
@@ -31,7 +33,9 @@ function ModifierPane() {
                         setImage({
                             ...image,
                             data: data.image,
-                            extension: data.ext,
+                            extension: data.extension,
+                            fileName: data.fileName,
+                            fileSize: data.fileSize,
                         })
                     );
                 } else {
@@ -43,9 +47,9 @@ function ModifierPane() {
 
     return (
         <>
-            <div className="overflow-y-scroll h-[50%]">
-                <h1 className="text-xs">Modifier Pane</h1>
-                <div className="flex flex-col bg-gray-50 dark:bg-transparent rounded-lg border-[1px] border-gray-100 dark:border-gray-700  shadow-sm md:flex-col gap-1 overflow-hidden md:h-full  w-full h-fit">
+            <div className="h-[50%] relative">
+                <PaneTitle title="Modifier Pane" />
+                <div className="flex flex-col bg-gray-50 dark:bg-transparent rounded-lg border-[1px] border-gray-100 dark:border-gray-700  shadow-sm md:flex-col gap-1 overflow-y-scroll md:h-full  w-full h-fit">
                     <Accordion title="Filter & Effects">
                         <CButton
                             onClickCallback={(e) => handleClick(e)}

@@ -38,3 +38,9 @@ export function base64ToUInt8Array(base64: string): Uint8Array {
     }
     return new Uint8Array(byteNumbers);
 }
+
+export function getSizeInBytes(base64: string): number {
+    let base64Data = base64.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+    let binaryData = atob(base64Data);
+    return binaryData.length;
+}

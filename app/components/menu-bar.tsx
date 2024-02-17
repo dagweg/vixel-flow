@@ -29,32 +29,29 @@ export default MenuBar;
 
 function handleDownload(menuRef: MutableRefObject<HTMLDivElement | null>) {
     // gets image data
-    const imageData = store.getState().image.data as string;
-    const imageExtension = store.getState().image.extension;
+    const image = store.getState().image;
 
     // Decode base64 string to Uint8Array
-    const byteArray = base64ToUInt8Array(imageData);
+    const byteArray = base64ToUInt8Array(image.data as string);
 
     // Convert Uint8Array to image object
     const blob = new Blob([byteArray], {
-        type: `image/${imageExtension}`,
+        type: `image/${image.extension}`,
     });
 
-    // converts to url
     const href = URL.createObjectURL(blob);
-    console.log(href);
+
     // create a link
     const a = Object.assign(document.createElement("a"), {
         href,
         style: "display:none",
-        download: `image.${imageExtension}`,
+        download: image.fileName,
     });
     menuRef.current?.appendChild(a);
-    // click the link
     a.click();
-    // free the url
+
+    // Free the memory
     URL.revokeObjectURL(href);
-    // delete the link
     a.remove();
 }
 

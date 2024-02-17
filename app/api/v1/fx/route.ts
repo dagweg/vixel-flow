@@ -1,6 +1,6 @@
 import grayscale from "@/lib/image-processing/grayscale";
 import sepia from "@/lib/image-processing/sepia";
-import { base64ToBuffer } from "@/lib/image-processing/util";
+import { base64ToBuffer, getSizeInBytes } from "@/lib/image-processing/util";
 import { FxRequest, apiFxReqValidator } from "@/lib/validators";
 import { NextRequest, NextResponse } from "next/server";
 import * as fileType from "file-type";
@@ -34,10 +34,19 @@ export async function POST(request: NextRequest) {
             "base64"
         )}`;
 
+        const fileName = body.fileName.replace(
+            `.${extension?.ext}`,
+            `_${body.effect.toLowerCase()}.${extension?.ext}`
+        );
+
+        const fileSize = getSizeInBytes(finalImageBase64);
+
         return NextResponse.json(
             {
                 image: finalImageBase64,
                 ext: extension?.ext,
+                fileSize: fileSize,
+                fileName: fileName,
             },
             { status: 200 }
         );

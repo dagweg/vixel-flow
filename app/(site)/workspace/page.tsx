@@ -23,6 +23,7 @@ import {
     ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import RecentModificationsPane from "@/app/components/recent-modifications-pane";
+import PaneTitle from "@/app/components/pane-title";
 
 function Workspace() {
     // Image stored here after import
@@ -55,31 +56,34 @@ function Workspace() {
     }
 
     return (
-        <div className="flex flex-col gap-2  min-h-fit h-screen w-full relative p-4">
+        <div className="flex flex-col gap-4  h-fit  w-full relative p-4">
             <MenuBar />
-            <div className="flex flex-col md:flex-row h-full gap-2">
+            <div className="flex flex-col md:flex-row h-full gap-4 md:gap-2">
                 <div
-                    className="w-full flex-grow h-[375px] md:w-full md:h-full
-                overflow-hidden rounded-lg relative flex items-center
-                border-gray-200 border-[1px] dark:border-gray-700 "
+                    className="w-full flex-grow h-[375px] md:w-full md:h-screen
+                 rounded-lg relative flex items-center
+                border-gray-200 border-[1px] dark:border-gray-700 z-[1]"
                 >
-                    {/** Main section for displaying the image */}
-                    {imageData !== undefined ? (
-                        <Image
-                            src={imageData ?? ""}
-                            alt="image"
-                            width={10}
-                            height={10}
-                            className="w-auto  h-auto mx-auto"
-                            // @ts-ignore
-                            onContextMenu={(e) => handleContextMenu(e)}
-                        ></Image>
-                    ) : (
-                        <DragNDrop />
-                    )}
+                    <PaneTitle title="Canvas" />
+                    <div className="overflow-hidden w-full h-full flex flex-col justify-center">
+                        {/** Main section for displaying the image */}
+                        {imageData !== undefined ? (
+                            <Image
+                                src={imageData ?? ""}
+                                alt="image"
+                                width={10}
+                                height={10}
+                                className="w-auto  h-auto mx-auto"
+                                // @ts-ignore
+                                onContextMenu={(e) => handleContextMenu(e)}
+                            ></Image>
+                        ) : (
+                            <DragNDrop />
+                        )}
+                    </div>
                 </div>
                 {/** Side Bar Containing all modifiers */}
-                <div className="flex flex-col gap-4 w-full md:w-[450px]">
+                <div className="flex flex-col gap-4 w-full md:w-[450px] md:h-screen">
                     <ModifierPane />
                     <RecentModificationsPane />
                 </div>

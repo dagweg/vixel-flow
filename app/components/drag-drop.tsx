@@ -1,11 +1,16 @@
 "use client";
 
-import { setImage } from "@/lib/redux/slices/imageSlice";
+import {
+    ImageState,
+    setImage,
+    setOriginalImage,
+} from "@/lib/redux/slices/imageSlice";
 import { AppDispatch, store } from "@/lib/redux/store";
 import React, { useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { IoMdCloudUpload } from "react-icons/io";
 import { useDispatch } from "react-redux";
+import { string } from "zod";
 
 /**
  * A component handling drag and drop files
@@ -22,21 +27,23 @@ function DragNDrop() {
 
             const fileName: string = acceptedFiles[0].name;
             const fileSize: number = parseFloat(
-                (acceptedFiles[0].size / Math.pow(10, 6)).toFixed(2)
+                (acceptedFiles[0].size / Math.pow(10, 6)).toFixed(4)
             );
 
-            reader.addEventListener("load", (e) => {
-                // console.log(e.target?.result);
+            const extension = fileName.split(".").pop();
 
+            reader.addEventListener("load", (e) => {
                 dispatch(
-                    setImage({
-                        ...store.getState().image,
+                    setOriginalImage({
                         data: e.target?.result as string,
                         fileName: fileName,
                         fileSize: fileSize,
+                        extension: extension,
                     })
                 );
-                // console.log(e.target?.result);
+                dispatch(
+                    setImage(store.getState().image.originalImage as ImageState)
+                );
             });
             reader.readAsDataURL(acceptedFiles[0]);
         },
