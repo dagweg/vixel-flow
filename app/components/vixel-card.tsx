@@ -39,7 +39,7 @@ function VixelCard({
 
     return (
         <section
-            className="w-full h-[75px] dark:bg-slate-800 hover:bg-gray-200 dark:hover:brightness-110 cursor-pointer duration-100 p-1 flex gap-2 rounded-md relative"
+            className="w-full h-[75px] dark:bg-slate-800 hover:bg-gray-200 dark:hover:brightness-110 cursor-pointer duration-100 p-1 flex gap-2 rounded-md relative [&>*]:font-roboto"
             onClick={handleVixelCardClick}
         >
             <div className=" overflow-hidden aspect-square min-h-full min-w-[75px] border-[1px] border-gray-300 dark:border-none  dark:bg-slate-950 rounded-lg flex items-center">
@@ -62,7 +62,10 @@ function VixelCard({
                         }`}
                 </h1>
                 <span className="text-[12px] font-light">
-                    <p>{fileSize !== undefined && `Size: ${fileSize}mb`}</p>
+                    <p>
+                        {fileSize !== undefined &&
+                            `Size: ${fileSize.toPrecision(4)}mb`}
+                    </p>
                     <p>{imageRes !== undefined && `Dim: ${imageRes}`}</p>
                 </span>
             </div>

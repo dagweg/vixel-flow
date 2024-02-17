@@ -1,26 +1,47 @@
 "use client";
 
-import React, { MutableRefObject, useRef } from "react";
+import React, { MutableRefObject, useRef, useState } from "react";
 import MButton from "./menu-button";
 import { FiShare2 } from "react-icons/fi";
 import { TfiDownload } from "react-icons/tfi";
-import { store } from "@/lib/redux/store";
+import { AppDispatch, store } from "@/lib/redux/store";
 import { base64ToUInt8Array } from "@/lib/image-processing/util";
+import { IoTrashBin } from "react-icons/io5";
+import { handleImageRemove } from "./image-context-menu";
+import { useDispatch } from "react-redux";
 
 function MenuBar() {
     const menuRef = useRef<HTMLDivElement | null>(null);
 
+    const image = store.getState().image;
+    const dispatch = useDispatch<AppDispatch>();
+
     return (
         <div
             ref={menuRef}
-            className="tooltip w-fit h-[40px]  bg-gray-100 dark:bg-gray-900 rounded-lg  flex justify-start items-center"
+            className="tooltip w-full h-[40px]  bg-gray-100 dark:bg-transparent border-gray-900 border-[1px] rounded-lg  flex justify-between items-center"
         >
-            <MButton tooltip="Download" onClick={() => handleDownload(menuRef)}>
-                <TfiDownload></TfiDownload>
-            </MButton>
-            <MButton tooltip="Share" onClick={handleShare}>
-                <FiShare2></FiShare2>
-            </MButton>
+            <div>
+                <MButton
+                    tooltip="Download"
+                    onClick={() => handleDownload(menuRef)}
+                >
+                    <TfiDownload></TfiDownload>
+                </MButton>
+                <MButton tooltip="Share" onClick={handleShare}>
+                    <FiShare2></FiShare2>
+                </MButton>
+            </div>
+            <div>
+                {image !== undefined && (
+                    <MButton
+                        tooltip="Delete"
+                        onClick={() => handleImageRemove(dispatch)}
+                    >
+                        <IoTrashBin></IoTrashBin>
+                    </MButton>
+                )}
+            </div>
         </div>
     );
 }

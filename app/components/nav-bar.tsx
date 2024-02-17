@@ -12,6 +12,7 @@ import {
 import { ModeToggle } from "./mode-toggle";
 import { FaBars } from "react-icons/fa";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function NavBar() {
     const [navBar, setNavBar] = useState<{
@@ -35,6 +36,8 @@ export default function NavBar() {
         }
     });
 
+    const pathname = usePathname();
+
     return (
         <NavigationMenu className="p-2 py-4 flex justify-between min-w-full sticky top-0 backdrop-blur-xl ">
             <NavigationMenuList
@@ -42,7 +45,7 @@ export default function NavBar() {
                     navBar.isOpen &&
                         "flex flex-col fixed  gap-4 bg-white backdrop-blur-xl dark:bg-gray-900 items-start justify-start pl-10 pt-20 text-lg scale-x-100 md:static md:flex-row md:p-2  md:bg-transparent",
                     !navBar.isOpen &&
-                        " hidden md:flex sticky top-0 gap-4 items-start justify-start text-lg scale-x-0 md:scale-x-100 md:static md:flex-row md:p-2  md:bg-transparent"
+                        " hidden md:flex sticky top-0 gap-4 items-center justify-start text-lg scale-x-0 md:scale-x-100 md:static md:flex-row md:p-2  md:bg-transparent"
                 )}
             >
                 <Link href={"/"} className="w-[50px]">
@@ -57,22 +60,13 @@ export default function NavBar() {
                     ></Image>
                 </Link>
                 <NavigationMenuLink
-                    href="/dashboard"
-                    className="hover:opacity-80 duration-150 cursor-pointer hover:translate-x-1"
-                >
-                    Dashboard
-                </NavigationMenuLink>
-                <NavigationMenuLink
                     href="/workspace"
-                    className="hover:opacity-80 duration-150 cursor-pointer hover:translate-x-1"
+                    className={cn(
+                        "hover:opacity-80 duration-150 cursor-pointer rounded-lg hover:underline  px-4",
+                        pathname.includes("workspace") && "font-bold"
+                    )}
                 >
                     Workspace
-                </NavigationMenuLink>
-                <NavigationMenuLink
-                    href="/contact"
-                    className="hover:opacity-80 duration-150 cursor-pointer hover:translate-x-1"
-                >
-                    Contact
                 </NavigationMenuLink>
             </NavigationMenuList>
             <div

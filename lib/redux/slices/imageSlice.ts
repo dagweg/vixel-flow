@@ -29,22 +29,29 @@ const imageSlice = createSlice({
     initialState,
     reducers: {
         setImage: (state, action: PayloadAction<ImageState>) => {
+            let newImageHash: string;
+            let imageAlreadyPresent: boolean | undefined;
+
+            if (action.payload.data !== undefined) {
+                newImageHash = crypto
+                    .createHash("sha256")
+                    .update(action.payload.data as string)
+                    .digest("hex");
+
+                imageAlreadyPresent = state.recentModifications?.some(
+                    (image: ImageState) => {
+                        const imageHash = crypto
+                            .createHash("sha256")
+                            .update(image.data as string)
+                            .digest("hex");
+                        return imageHash === newImageHash;
+                    }
+                );
+            }
+
             // sha256 hash for the new image
-            const newImageHash = crypto
-                .createHash("sha256")
-                .update(action.payload.data as string)
-                .digest("hex");
 
             // compared with each image data hash
-            const imageAlreadyPresent = state.recentModifications?.some(
-                (image: ImageState) => {
-                    const imageHash = crypto
-                        .createHash("sha256")
-                        .update(image.data as string)
-                        .digest("hex");
-                    return imageHash === newImageHash;
-                }
-            );
 
             if (imageAlreadyPresent === false) {
                 state.recentModifications?.push(action.payload);

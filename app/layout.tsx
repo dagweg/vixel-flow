@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Nunito_Sans } from "next/font/google";
+import { Nunito_Sans, Roboto } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./components/theme-provider";
 import NavBar from "./components/nav-bar";
 import ReduxProvider from "./components/redux-provider";
 import "rc-tooltip/assets/bootstrap_white.css";
+import Footer from "./components/footer";
 
 const nuntio_sans = Nunito_Sans({ subsets: ["latin"] });
 
@@ -31,11 +32,11 @@ export default function RootLayout({
 }>) {
     return (
         <ReduxProvider>
-            <html lang="en">
+            <html lang="en" className="scrollbar scrollbar-track-slate-950">
                 <head>
                     <link rel="icon" href="/favicon.ico" sizes="any" />
                 </head>
-                <body className={nuntio_sans.className}>
+                <body className={`${nuntio_sans.className}`}>
                     <ThemeProvider
                         attribute="class"
                         defaultTheme="system"
@@ -45,6 +46,7 @@ export default function RootLayout({
                         <main className="max-w-[1500px] mx-auto">
                             <NavBar />
                             {children}
+                            <Footer />
                         </main>
                     </ThemeProvider>
                 </body>

@@ -65,7 +65,7 @@ function Workspace() {
                 border-gray-200 border-[1px] dark:border-gray-700 z-[1]"
                 >
                     <PaneTitle title="Canvas" />
-                    <div className="overflow-hidden w-full h-full flex flex-col justify-center">
+                    <div className="overflow-hidden w-full h-full flex flex-col justify-center z-0">
                         {/** Main section for displaying the image */}
                         {imageData !== undefined ? (
                             <Image
@@ -73,7 +73,7 @@ function Workspace() {
                                 alt="image"
                                 width={10}
                                 height={10}
-                                className="w-auto  h-auto mx-auto"
+                                className="w-auto  h-auto mx-auto z-10"
                                 // @ts-ignore
                                 onContextMenu={(e) => handleContextMenu(e)}
                             ></Image>
@@ -90,7 +90,7 @@ function Workspace() {
             </div>
 
             {/** Image Right Click ContextMenu */}
-            <div ref={ref} className="w-fit h-fit fixed inset-0">
+            <div ref={ref} className="w-fit h-fit fixed inset-0 z-[15]">
                 {isComponentVisible && (
                     <ImageContextMenu
                         setIsComponentVisible={setIsComponentVisible}

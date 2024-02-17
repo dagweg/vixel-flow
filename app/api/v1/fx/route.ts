@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
             `_${body.effect.toLowerCase()}.${extension?.ext}`
         );
 
-        const fileSize = getSizeInBytes(finalImageBase64);
+        const fileSize = getSizeInBytes(finalImageBase64) / Math.pow(10, 6);
 
         return NextResponse.json(
             {

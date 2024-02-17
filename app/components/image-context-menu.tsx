@@ -16,16 +16,8 @@ interface ImageContextMenuProps {
 function ImageContextMenu({ setIsComponentVisible }: ImageContextMenuProps) {
     const dispatch = useDispatch<AppDispatch>();
 
-    function handleImageRemove(dispatch: AppDispatch) {
-        dispatch(
-            setImage({
-                data: undefined,
-                extension: undefined,
-                fileName: undefined,
-                fileSize: undefined,
-            })
-        );
-        dispatch(setImageRecentModifications([]));
+    function _handleImageRemove() {
+        handleImageRemove(dispatch);
         setIsComponentVisible(false);
     }
 
@@ -33,7 +25,7 @@ function ImageContextMenu({ setIsComponentVisible }: ImageContextMenuProps) {
         <div className="bg-white p-2 rounded-sm border-[1px] border-gray-300 dark:bg-black dark:border-gray-700 flex flex-col gap-2">
             <CMButton
                 className="!text-red-500"
-                onClickCallback={() => handleImageRemove(dispatch)}
+                onClickCallback={() => _handleImageRemove()}
             >
                 <FaRegTrashAlt />
                 Remove
@@ -43,3 +35,15 @@ function ImageContextMenu({ setIsComponentVisible }: ImageContextMenuProps) {
 }
 
 export default ImageContextMenu;
+
+export function handleImageRemove(dispatch: AppDispatch) {
+    dispatch(
+        setImage({
+            data: undefined,
+            extension: undefined,
+            fileName: undefined,
+            fileSize: undefined,
+        })
+    );
+    dispatch(setImageRecentModifications([]));
+}

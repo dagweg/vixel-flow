@@ -74,3 +74,23 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* width */
+::-webkit-scrollbar {
+    @apply w-[4px];
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    @apply dark:bg-black;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    @apply rounded-lg bg-violet-400;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-purple-900;
+}
