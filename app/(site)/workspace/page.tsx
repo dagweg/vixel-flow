@@ -17,6 +17,12 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { setImage } from "@/lib/redux/slices/imageSlice";
 import MenuBar from "@/app/components/menu-bar";
 import ImageContextMenu from "@/app/components/image-context-menu";
+import {
+    ResizableHandle,
+    ResizablePanel,
+    ResizablePanelGroup,
+} from "@/components/ui/resizable";
+import RecentModificationsPane from "@/app/components/recent-modifications-pane";
 
 function Workspace() {
     // Image stored here after import
@@ -49,11 +55,15 @@ function Workspace() {
     }
 
     return (
-        <div className="flex flex-col justify-center  h-screen w-full relative p-4">
+        <div className="flex flex-col gap-2  min-h-fit h-screen w-full relative p-4">
             <MenuBar />
-            <div className="flex flex-col md:flex-row w-full h-full pb-8 pt-2 gap-4 ">
-                {/** Main section for displaying the image */}
-                <div className="w-full h-[375px] md:w-full md:h-full overflow-hidden rounded-lg  relative flex items-center border-gray-200 border-[1px] dark:border-gray-700">
+            <div className="flex flex-col md:flex-row h-full gap-2">
+                <div
+                    className="w-full flex-grow h-[375px] md:w-full md:h-full
+                overflow-hidden rounded-lg relative flex items-center
+                border-gray-200 border-[1px] dark:border-gray-700 "
+                >
+                    {/** Main section for displaying the image */}
                     {imageData !== undefined ? (
                         <Image
                             src={imageData ?? ""}
@@ -68,9 +78,11 @@ function Workspace() {
                         <DragNDrop />
                     )}
                 </div>
-
                 {/** Side Bar Containing all modifiers */}
-                <ModifierPane />
+                <div className="flex flex-col gap-4 w-full md:w-[450px]">
+                    <ModifierPane />
+                    <RecentModificationsPane />
+                </div>
             </div>
 
             {/** Image Right Click ContextMenu */}
@@ -86,3 +98,43 @@ function Workspace() {
 }
 
 export default Workspace;
+
+{
+    /* <ResizablePanelGroup
+                direction="horizontal"
+                className="flex flex-col md:flex-row w-full h-full pb-8 pt-2 gap-4 "
+            >
+                <ResizablePanel
+                    defaultSize={80}
+                    className="w-full flex-grow h-[375px] md:w-full md:h-full overflow-hidden rounded-lg  relative flex items-center border-gray-200 border-[1px] dark:border-gray-700"
+                >
+                    {imageData !== undefined ? (
+                        <Image
+                            src={imageData ?? ""}
+                            alt="image"
+                            width={10}
+                            height={10}
+                            className="w-auto  h-auto mx-auto"
+                            onContextMenu={(e) => handleContextMenu(e)}
+                        ></Image>
+                    ) : (
+                        <DragNDrop />
+                    )}
+                </ResizablePanel>
+                <ResizableHandle withHandle />
+                <ResizablePanel className="!w-[300px] min-w-[300px]">
+                    <ResizablePanelGroup
+                        direction="vertical"
+                        className="flex flex-col"
+                    >
+                        <ResizablePanel>
+                            <ModifierPane />
+                        </ResizablePanel>
+                        <ResizableHandle withHandle />
+                        <ResizablePanel>
+                            <LayerPane />
+                        </ResizablePanel>
+                    </ResizablePanelGroup>
+                </ResizablePanel>
+            </ResizablePanelGroup> */
+}

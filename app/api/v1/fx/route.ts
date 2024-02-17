@@ -34,12 +34,18 @@ export async function POST(request: NextRequest) {
             "base64"
         )}`;
 
-        return NextResponse.json({
-            image: finalImageBase64,
-            ext: extension?.ext,
-        });
+        return NextResponse.json(
+            {
+                image: finalImageBase64,
+                ext: extension?.ext,
+            },
+            { status: 200 }
+        );
     } catch (error) {
         console.log((error as Error).message);
-        return NextResponse.json({});
+        return NextResponse.json(
+            { error: (error as Error).message },
+            { status: 500 }
+        );
     }
 }

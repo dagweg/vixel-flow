@@ -1,7 +1,7 @@
 "use client";
 
 import { setImage } from "@/lib/redux/slices/imageSlice";
-import { AppDispatch } from "@/lib/redux/store";
+import { AppDispatch, store } from "@/lib/redux/store";
 import React, { useCallback, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { IoMdCloudUpload } from "react-icons/io";
@@ -18,13 +18,25 @@ function DragNDrop() {
 
     const onDrop: any = useCallback(
         (acceptedFiles: FileList) => {
-            // console.log(acceptedFiles);
             const reader = new FileReader();
+
+            const fileName: string = acceptedFiles[0].name;
+            const fileSize: number = parseFloat(
+                (acceptedFiles[0].size / Math.pow(10, 6)).toFixed(2)
+            );
 
             reader.addEventListener("load", (e) => {
                 // console.log(e.target?.result);
-                dispatch(setImage(e.target?.result as string));
-                console.log(e.target?.result);
+
+                dispatch(
+                    setImage({
+                        ...store.getState().image,
+                        data: e.target?.result as string,
+                        fileName: fileName,
+                        fileSize: fileSize,
+                    })
+                );
+                // console.log(e.target?.result);
             });
             reader.readAsDataURL(acceptedFiles[0]);
         },

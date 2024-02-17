@@ -4,7 +4,10 @@ import CMButton from "./custom-context-menu-button";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { AppDispatch } from "@/lib/redux/store";
 import { useDispatch } from "react-redux";
-import { setImage } from "@/lib/redux/slices/imageSlice";
+import {
+    setImage,
+    setImageRecentModifications,
+} from "@/lib/redux/slices/imageSlice";
 
 interface ImageContextMenuProps {
     setIsComponentVisible: (isComponentVisible: boolean) => void;
@@ -14,7 +17,15 @@ function ImageContextMenu({ setIsComponentVisible }: ImageContextMenuProps) {
     const dispatch = useDispatch<AppDispatch>();
 
     function handleImageRemove(dispatch: AppDispatch) {
-        dispatch(setImage(undefined));
+        dispatch(
+            setImage({
+                data: undefined,
+                extension: undefined,
+                fileName: undefined,
+                fileSize: undefined,
+            })
+        );
+        dispatch(setImageRecentModifications([]));
         setIsComponentVisible(false);
     }
 
