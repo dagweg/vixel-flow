@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+const metadata = require("@/app/data/metadata.json");
 
 interface MetaWrapperProps {
     title: string;
@@ -21,9 +24,11 @@ function MetaWrapper({
             <meta
                 property="og:url"
                 content={
-                    process.env.VERCEL_URL +
-                    window.location.pathname +
-                    window.location.search
+                    typeof window !== "undefined"
+                        ? metadata.url +
+                          window.location.pathname +
+                          window.location.search
+                        : ""
                 }
             />
             <meta name="twitter:card" content={imageTwitter} />
