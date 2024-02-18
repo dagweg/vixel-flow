@@ -83,8 +83,12 @@ function RecentCard({
                         {fileName !== undefined &&
                             `${
                                 fileName.length <= 30
-                                    ? fileName
-                                    : `${fileName.substring(0, 30)}...`
+                                    ? fileName.split(".")[0]
+                                    : `${
+                                          fileName
+                                              .substring(0, 30)
+                                              .split(".")[0]
+                                      }...`
                             }`}
                     </h1>
                     <span className="text-[12px] font-light">
@@ -97,12 +101,6 @@ function RecentCard({
                 </div>
                 <div className="absolute right-0">
                     {isInSelectMode ? (
-                        // <Checkbox
-                        //     id={key}
-                        //     checked={selected}
-                        //     onCheckedChange={handleCheckBoxChange}
-                        //     className="z-[100]"
-                        // ></Checkbox>
                         <div className="p-2 duration-150 mx-2 ">
                             <input
                                 type="checkbox"

@@ -65,7 +65,7 @@ const imageSlice = createSlice({
             state.fileSize = action.payload.fileSize;
             state.imageHash = newImageHash;
 
-            if (!imageAlreadyPresent) {
+            if (!imageAlreadyPresent && action.payload.data !== undefined) {
                 state.recentModifications?.push({
                     ...action.payload,
                     imageHash: newImageHash,
@@ -110,6 +110,13 @@ const imageSlice = createSlice({
                 console.log(`Image not found`);
             }
         },
+        setImageSelectedAll: (state, action: PayloadAction<boolean>) => {
+            const newState: ImageState[] =
+                state.recentModifications?.map((image) => {
+                    return { ...image, selected: action.payload };
+                }) || [];
+            return { ...state, recentModifications: newState };
+        },
     },
 });
 
@@ -118,6 +125,7 @@ export const {
     setImageRecentModifications,
     setOriginalImage,
     setImageSelected,
+    setImageSelectedAll,
 } = imageSlice.actions;
 
 // Will be imported as ImageReducer in other modules

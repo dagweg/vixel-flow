@@ -19,7 +19,10 @@ function ModifierPane() {
             fileName: image.originalImage?.fileName as string,
         };
 
-        console.log(payload);
+        if (payload.image === undefined) {
+            console.log("Cant process empty file. Image is undefined");
+            return;
+        }
 
         fetch("/api/v1/fx/", {
             method: "POST",

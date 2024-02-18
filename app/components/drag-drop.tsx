@@ -43,7 +43,6 @@ function DragNDrop() {
                 dispatch(setImage(originalImage));
 
                 console.log("STORE STATE");
-                console.log(store.getState());
             });
             reader.readAsDataURL(acceptedFiles[0]);
         },

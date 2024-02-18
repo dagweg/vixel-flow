@@ -6,6 +6,7 @@ import WorkspaceSidebar from "@/app/components/workspace-side-bar";
 import Canvas from "@/app/components/canvas";
 import ContextMenu from "@/app/components/context-menu";
 import useComponentVisible from "@/app/hooks/use-component-visible";
+import MetaWrapper from "@/app/components/meta-wrapper";
 
 function Workspace() {
     /**
@@ -29,17 +30,25 @@ function Workspace() {
         setIsComponentVisible(true);
     }
     return (
-        <div className="flex flex-col gap-4  h-fit  w-full relative p-4">
-            <MenuBar />
-            <div className="flex flex-col md:flex-row h-full gap-4 md:gap-2">
-                <Canvas handleContextMenu={handleContextMenu} />
-                <WorkspaceSidebar />
-            </div>
-            {/* <ContextMenu
+        <div>
+            <MetaWrapper
+                title="Vixel Flow"
+                description="Workspaces"
+                imageTwitter=""
+                imageUrl=""
+            ></MetaWrapper>
+            <div className="flex flex-col gap-4  h-fit  w-full relative p-4">
+                <MenuBar />
+                <div className="flex flex-col md:flex-row h-full gap-4 md:gap-2">
+                    <Canvas handleContextMenu={handleContextMenu} />
+                    <WorkspaceSidebar />
+                </div>
+                {/* <ContextMenu
                 isComponentVisible={isComponentVisible}
                 setIsComponentVisible={setIsComponentVisible}
                 ref={ref}
             /> */}
+            </div>
         </div>
     );
 }
