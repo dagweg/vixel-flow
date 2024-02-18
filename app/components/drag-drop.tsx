@@ -33,17 +33,17 @@ function DragNDrop() {
             const extension = fileName.split(".").pop();
 
             reader.addEventListener("load", (e) => {
-                dispatch(
-                    setOriginalImage({
-                        data: e.target?.result as string,
-                        fileName: fileName,
-                        fileSize: fileSize,
-                        extension: extension,
-                    })
-                );
-                dispatch(
-                    setImage(store.getState().image.originalImage as ImageState)
-                );
+                const originalImage = {
+                    data: e.target?.result as string,
+                    fileName: fileName,
+                    fileSize: fileSize,
+                    extension: extension,
+                };
+                dispatch(setOriginalImage(originalImage));
+                dispatch(setImage(originalImage));
+
+                console.log("STORE STATE");
+                console.log(store.getState());
             });
             reader.readAsDataURL(acceptedFiles[0]);
         },

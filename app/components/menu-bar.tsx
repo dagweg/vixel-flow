@@ -9,6 +9,9 @@ import { base64ToUInt8Array } from "@/lib/image-processing/util";
 import { IoTrashBin } from "react-icons/io5";
 import { handleImageRemove } from "./image-context-menu";
 import { useDispatch } from "react-redux";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { ImageState } from "@/lib/redux/slices/imageSlice";
+import JSZip from "jszip";
 
 function MenuBar() {
     const menuRef = useRef<HTMLDivElement | null>(null);
@@ -38,7 +41,7 @@ function MenuBar() {
                         tooltip="Delete"
                         onClick={() => handleImageRemove(dispatch)}
                     >
-                        <IoTrashBin></IoTrashBin>
+                        <FaRegTrashAlt></FaRegTrashAlt>
                     </MButton>
                 )}
             </div>
@@ -50,30 +53,44 @@ export default MenuBar;
 
 function handleDownload(menuRef: MutableRefObject<HTMLDivElement | null>) {
     // gets image data
-    const image = store.getState().image;
+    const images = store.getState().image.recentModifications;
 
-    // Decode base64 string to Uint8Array
-    const byteArray = base64ToUInt8Array(image.data as string);
+    let selectedImages: ImageState[] = [];
 
-    // Convert Uint8Array to image object
-    const blob = new Blob([byteArray], {
-        type: `image/${image.extension}`,
+    for (let image of images as ImageState[]) {
+        if (image.selected) {
+            selectedImages.push(image);
+        }
+    }
+
+    const zip = new JSZip();
+
+    for (let image of selectedImages) {
+        const byteArray = base64ToUInt8Array(image.data as string);
+        const blob = new Blob([byteArray], {
+            type: `image/${image.extension}`,
+        });
+        zip.file(image.fileName as string, blob);
+    }
+
+    zip.generateAsync({ type: "blob" }).then((content) => {
+        const href = URL.createObjectURL(content);
+
+        // create a link
+        const a = Object.assign(document.createElement("a"), {
+            href,
+            style: "display:none",
+            download:
+                `${images?.[0].fileName?.split(".")[0]}.zip` ??
+                `vixel-file.zip`,
+        });
+        menuRef.current?.appendChild(a);
+        a.click();
+
+        // Free the memory
+        URL.revokeObjectURL(href);
+        a.remove();
     });
-
-    const href = URL.createObjectURL(blob);
-
-    // create a link
-    const a = Object.assign(document.createElement("a"), {
-        href,
-        style: "display:none",
-        download: image.fileName,
-    });
-    menuRef.current?.appendChild(a);
-    a.click();
-
-    // Free the memory
-    URL.revokeObjectURL(href);
-    a.remove();
 }
 
 function handleShare() {}
