@@ -8,4 +8,4 @@ Vixel Flow is an image processing application designed to empower you with intui
 ![image](https://github.com/dagweg/vixel-flow/assets/90281138/362d2c86-635e-4fbe-9311-0530b38ae754)
 
 
-![Uploading image.png…]()
+![image](https://github.com/dagweg/vixel-flow/assets/90281138/fa129143-efb4-48f1-b0ce-fd8494d27bb2)
