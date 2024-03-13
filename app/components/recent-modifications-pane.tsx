@@ -66,7 +66,7 @@ function RecentModificationsPane() {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button className="h-[4px]  absolute z-10 right-0 top-0 translate-y-[-8px] text-xs translate-x-[-10px] bg-white text-black border-gray-300 hover:text-white dark:bg-black dark:text-white dark:border-gray-700 border-[1px] hover:bg-opacity-50">
-                                More {"  "}
+                                Options {"  "}
                                 {`${`(${selected})`}`}
                             </Button>
                         </DropdownMenuTrigger>

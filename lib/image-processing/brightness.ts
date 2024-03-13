@@ -1,13 +1,12 @@
 import sharp from "sharp";
 
-export default async function grayscale(
+export default async function brightness(
   imageBuffer: Buffer,
   intensity: Number
 ): Promise<Buffer> {
   try {
     const weight = Math.max(0, Math.min(1, intensity as number));
     let result = await sharp(imageBuffer)
-      .grayscale()
       .modulate({
         brightness: intensity as number,
       })

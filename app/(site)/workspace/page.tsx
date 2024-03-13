@@ -1,12 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import MenuBar from "@/app/components/menu-bar";
 import WorkspaceSidebar from "@/app/components/workspace-side-bar";
 import Canvas from "@/app/components/canvas";
 import ContextMenu from "@/app/components/context-menu";
 import useComponentVisible from "@/app/hooks/use-component-visible";
 import MetaWrapper from "@/app/components/meta-wrapper";
+import { DialogWarning } from "@/app/components/dialog-warning";
+import { Button } from "@/components/ui/button";
+import CButton from "@/app/components/custom-button";
+import DeleteButton from "@/app/components/delete-button";
 
 function Workspace() {
     /**
@@ -29,6 +33,7 @@ function Workspace() {
         }
         setIsComponentVisible(true);
     }
+
     return (
         <div>
             <MetaWrapper

@@ -7,19 +7,23 @@ import React, { ReactNode } from "react";
  */
 
 function Accordion({
-    title,
-    children,
+  title,
+  className,
+  children,
 }: {
-    title: string;
-    children: ReactNode;
+  title: string;
+  className?: string;
+  children: ReactNode;
 }) {
-    return (
-        <div className="collapse collapse-arrow bg-gray-100 dark:bg-gray-900 ">
-            <input type="radio" name="my-accordion-2" />
-            <div className="collapse-title font-medium">{title}</div>
-            <div className="collapse-content">{children}</div>
-        </div>
-    );
+  return (
+    <div
+      className={`collapse collapse-arrow bg-gray-100 dark:bg-gray-900 !rounded-md`}
+    >
+      <input type="radio" name="my-accordion-2" />
+      <div className="collapse-title font-medium">{title}</div>
+      <div className={`collapse-content ${className}`}>{children}</div>
+    </div>
+  );
 }
 
 export default Accordion;
