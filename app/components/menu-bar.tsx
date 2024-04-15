@@ -143,42 +143,44 @@ function ShareDialog({
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center backdrop-blur-sm ">
-      <div className="w-fit relative flex flex-col gap-4 bg-gray-200 p-4 rounded-lg  shadow-2xl ">
-        <span
-          className="z-[100] p-2  !bg-red-400 hover:bg-red-500 hover:text-white   left-1 top-1 absolute flex items-center justify-center rounded-md cursor-pointer "
-          onClick={() =>
-            setDialogs({
-              ...dialogs,
-              shareDialog: false,
-            })
-          }
-        >
-          <IoClose className="scale-110" />
-        </span>
-        <div className="relative grid grid-cols-3 grid-rows-1 gap-4 ">
-          {shareImage?.map((image, key) => (
-            <div
-              key={key}
-              onClick={() => handleImageSelected(image.imageHash as string)}
-              className="relative w-[100px] h-[100px]"
-            >
-              <Image
-                src={image.data as string}
-                alt={image.fileName as string}
-                width={5}
-                height={5}
-                objectFit="cover"
-                className="min-w-[100px] min-h-[100px]  rounded-lg relative z-10"
-              ></Image>
-              {image.radioSelected && (
-                <div className="bg-gradient-to-r from-purple-500 to-pink-500 scale-105 inset-0  absolute top-0 left-0 w-full h-full rounded-lg"></div>
-              )}
-            </div>
-          ))}
+    (image.recentModifications || []).length > 0 && (
+      <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center backdrop-blur-sm ">
+        <div className="w-fit relative flex flex-col gap-4 bg-gray-200 p-4 rounded-lg  shadow-2xl ">
+          <span
+            className="z-[100] p-2  bg-gray-500 hover:bg-red-500 hover:text-white   left-1 top-1 absolute flex items-center justify-center rounded-md cursor-pointer "
+            onClick={() =>
+              setDialogs({
+                ...dialogs,
+                shareDialog: false,
+              })
+            }
+          >
+            <IoClose className="scale-110" />
+          </span>
+          <div className="relative grid grid-cols-3 grid-rows-1 gap-4 ">
+            {shareImage?.map((image, key) => (
+              <div
+                key={key}
+                onClick={() => handleImageSelected(image.imageHash as string)}
+                className="relative w-[100px] h-[100px]"
+              >
+                <Image
+                  src={image.data as string}
+                  alt={image.fileName as string}
+                  width={5}
+                  height={5}
+                  objectFit="cover"
+                  className="min-w-[100px] min-h-[100px]  rounded-lg relative z-10"
+                ></Image>
+                {image.radioSelected && (
+                  <div className="bg-gradient-to-r from-purple-500 to-pink-500 scale-105 inset-0  absolute top-0 left-0 w-full h-full rounded-lg"></div>
+                )}
+              </div>
+            ))}
+          </div>
+          <Button>Share</Button>
         </div>
-        <Button>Share</Button>
       </div>
-    </div>
+    )
   );
 }

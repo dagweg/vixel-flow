@@ -1,5 +1,7 @@
 import sharp from "sharp";
 
+export const runtime = "edge";
+
 export default async function brightness(
   imageBuffer: Buffer,
   intensity: Number

@@ -1,5 +1,7 @@
 import sharp, { Matrix3x3 } from "sharp";
 
+export const runtime = "edge";
+
 export default async function sepia(
   imageBuffer: Buffer,
   intensity: Number

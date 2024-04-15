@@ -8,6 +8,8 @@ import brightness from "@/lib/image-processing/brightness";
 import saturation from "@/lib/image-processing/saturation";
 import contrast from "@/lib/image-processing/contrast";
 
+export const runtime = "edge";
+
 export async function POST(request: NextRequest) {
   try {
     const body: FxRequest = await request.json();

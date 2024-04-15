@@ -1,5 +1,7 @@
 import sharp from "sharp";
 
+export const runtime = "edge";
+
 export default async function contrast(
   imageBuffer: Buffer,
   intensity: number
