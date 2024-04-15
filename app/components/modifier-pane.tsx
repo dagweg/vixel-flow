@@ -11,6 +11,7 @@ import {
 import PaneTitle from "./pane-title";
 import { Slider } from "@/components/ui/slider";
 import { getCldImageUrl } from "next-cloudinary";
+import EffectIntensity from "./effect-intensity";
 
 function ModifierPane() {
   const image = useSelector((state: RootState) => state.image);
@@ -28,6 +29,9 @@ function ModifierPane() {
       effect: effectName,
       fileName: image.originalImage?.fileName as string,
       intensity: intensity as number,
+    };
+    const handleIntensityChange = (values: Number[]) => {
+      setIntensity(values[0]);
     };
 
     if (payload.image === undefined) {
@@ -63,10 +67,6 @@ function ModifierPane() {
       .catch((error) => console.log((error as Error).message));
   }
 
-  const handleIntensityChange = (values: Number[]) => {
-    setIntensity(values[0]);
-  };
-
   const filterButtons = ["Grayscale", "Sepia", "Vintage"];
   const enhancementButtons = ["Brightness", "Contrast", "Saturation"];
 
@@ -86,6 +86,10 @@ function ModifierPane() {
                   {name}
                 </CButton>
               ))}
+              <EffectIntensity
+                intensity={intensity}
+                setIntensity={setIntensity}
+              />
             </Accordion>
             <Accordion title="Image Enhancements">
               {enhancementButtons.map((name, key) => (
@@ -99,25 +103,6 @@ function ModifierPane() {
               ))}
             </Accordion>
           </div>
-          <fieldset className="flex flex-col absolute bottom-0 gap-2 p-4 w-full bg-gray-100 dark:bg-gray-800 rounded-t-lg">
-            <label htmlFor="intensity">Effect Intensity</label>
-            <div className="flex flex-col gap-4">
-              <div>
-                <span>{String(intensity)}</span>
-                <Slider
-                  className="cursor-pointer"
-                  name="intensity"
-                  id="intensity"
-                  // defaultValue={[intensity]}
-                  min={0}
-                  max={10}
-                  step={0.01}
-                  onValueChange={(v: Number[]) => setIntensity(v[0])}
-                ></Slider>
-              </div>
-              {/* <Button onClick={(e) => }>Apply</Button> */}
-            </div>
-          </fieldset>
         </div>
       </div>
     </>
