@@ -10,10 +10,11 @@ export default function Home() {
   return (
     <>
       <div>
-        <section className="flex h-screen items-center justify-center flex-col">
+        <section className="flex h-screen items-center justify-center flex-col relative">
           <h1 className="text-2xl font-bold md:text-5xl relative z-10">
             Weclome to
           </h1>
+          {/* <div className="absolute w-[500px] h-[300px] bg-red-500 left-0"></div> */}
           <div className="flex gap-6 flex-col items-center justify-center relative ">
             <Image
               src={"/Logo/logo.svg"}
@@ -23,9 +24,6 @@ export default function Home() {
               alt=""
             ></Image>
             <div className="absolute blur-[200px]  inset-0 opacity-20 dark:opacity-60   rounded-full  bg-gradient-to-r from-purple-600 to-pink-600 animate-spin "></div>
-            {/* <span className="absolute block text-6xl md:text-5xl translate-y-[-52px] translate-x-[280px] w-full">
-              ixel Flow
-            </span> */}
             <span className="text-6xl md:text-5xl text-center w-full">
               Vixel Flow
             </span>

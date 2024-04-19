@@ -1,6 +1,6 @@
 "use client";
 
-import React, { ReactNode, Suspense } from "react";
+import React, { ReactNode, Suspense, useEffect, useRef } from "react";
 import PaneTitle from "./pane-title";
 import Image from "next/image";
 import DragNDrop from "./drag-drop";
@@ -15,20 +15,40 @@ function Canvas({
 }) {
   const image = useSelector((state: RootState) => state.image);
 
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+
+    const w = canvas?.width;
+    const h = canvas?.height;
+
+    console.log(w);
+    console.log(h);
+    // ctx?.drawImage(image.data,0,0,)
+  });
+
   const CanvasImage = React.lazy<React.FC>(() => {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({
           default: () => (
-            <Image
-              src={image.data as string}
-              alt="image"
+            <canvas
+              ref={canvasRef}
               width={10}
               height={10}
               className="w-auto h-auto mx-auto z-10"
-              // @ts-ignore
-              onContextMenu={(e) => handleContextMenu(e)}
-            />
+            ></canvas>
+            // <Image
+            //   src={image.data as string}
+            //   alt="image"
+            //   width={10}
+            //   height={10}
+            //   className="w-auto h-auto mx-auto z-10"
+            //   // @ts-ignore
+            //   onContextMenu={(e) => handleContextMenu(e)}
+            // />
           ),
         });
       }, 100);
