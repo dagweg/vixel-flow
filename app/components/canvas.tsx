@@ -18,15 +18,11 @@ function Canvas({
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-
-    const w = canvas?.width;
-    const h = canvas?.height;
-
-    console.log(w);
-    console.log(h);
-    // ctx?.drawImage(image.data,0,0,)
+    // const canvas = canvasRef.current;
+    // const ctx = canvas?.getContext("2d");
+    // const img = new (Image)();
+    // img.src = image.data as string;
+    // ctx?.drawImage(img, 0, 0, 500, 500);
   });
 
   const CanvasImage = React.lazy<React.FC>(() => {
@@ -34,21 +30,21 @@ function Canvas({
       setTimeout(() => {
         resolve({
           default: () => (
-            <canvas
-              ref={canvasRef}
-              width={10}
-              height={10}
-              className="w-auto h-auto mx-auto z-10"
-            ></canvas>
-            // <Image
-            //   src={image.data as string}
-            //   alt="image"
+            // <canvas
+            //   ref={canvasRef}
             //   width={10}
             //   height={10}
             //   className="w-auto h-auto mx-auto z-10"
-            //   // @ts-ignore
-            //   onContextMenu={(e) => handleContextMenu(e)}
-            // />
+            // ></canvas>
+            <Image
+              src={image.data as string}
+              alt="image"
+              width={10}
+              height={10}
+              className="w-auto h-auto mx-auto z-10"
+              // @ts-ignore
+              onContextMenu={(e) => handleContextMenu(e)}
+            />
           ),
         });
       }, 100);
